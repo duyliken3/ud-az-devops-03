@@ -5,8 +5,8 @@ client_secret = "h~c8Q~36TyQsM9Uk9qLkyHbuu6C1wNdnE_CqkbfV"
 tenant_id = "db086519-96ca-4ffb-8b21-fc8954da3df9"
 
 # Resource Group/Location
-location = "Southeast Asia"
-resource_group = "ud-az-devops-02"
+location = "East Asia"
+resource_group = "ud-az-devops-03-tf"
 application_type = "ud-az-devops-03-app"
 
 # Network
