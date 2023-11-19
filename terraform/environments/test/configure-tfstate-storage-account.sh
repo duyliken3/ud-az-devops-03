@@ -4,8 +4,8 @@ STORAGE_ACCOUNT_NAME="tfstate$RANDOM$RANDOM"
 CONTAINER_NAME="tfstate"
 
 # This command is not needed in the Udacity provided Azure account. 
-# Create resource group
-# az group create --name $RESOURCE_GROUP_NAME --location eastus
+Create resource group
+az group create --name $RESOURCE_GROUP_NAME --location southeastasia
 
 # Create storage account
 az storage account create --resource-group $RESOURCE_GROUP_NAME --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
