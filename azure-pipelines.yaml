@@ -13,7 +13,7 @@ trigger:
 variables:
   python.version: '3.7.6'
   # ToDo: Replace the service connection name as used in the DevOps project settings
-  azureServiceConnectionId: '2d671b25-8f2a-4972-a686-631ca5091ac5'
+  azureServiceConnectionId: 'a510ae5e-c185-4a8c-9486-c916d6e256f9'
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
   # Environment name
@@ -44,9 +44,9 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environments/test'
         backendServiceArm: '$(azureServiceConnectionId)'
-        backendAzureRmResourceGroupName: 'ud-az-devops-03'
-        backendAzureRmStorageAccountName: 'udazstorage03'
-        backendAzureRmContainerName: 'udazstorage03'
+        backendAzureRmResourceGroupName: 'ud-az-devops-03-tf'
+        backendAzureRmStorageAccountName: 'tfstate25863192'
+        backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'terraform.test.tfstate'
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
