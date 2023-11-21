@@ -17,7 +17,7 @@ variable address_space {}
 # VM
 variable "admin_username" {}
 variable "admin_password" {
-    default = "th3_fl@tw0rld"
+    default = "tQ=~cGqN;z[(,6:3"
 }
 
 variable "public_key_path" {}
