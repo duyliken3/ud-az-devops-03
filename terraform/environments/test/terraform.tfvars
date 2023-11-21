@@ -11,7 +11,7 @@ application_type = "ud-az-devops-03-app"
 
 # VM
 admin_username = "devop_admin"
-admin_password = "devops_pWd"
+admin_password = "tQ=~cGqN;z[(,6:3"
 public_key_path = "~/.ssh/id_rsa.pub"
 
 # Network
