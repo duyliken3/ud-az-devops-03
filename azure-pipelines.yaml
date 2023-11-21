@@ -1,6 +1,6 @@
 name: Azure Pipelines
 variables:
-
+  azureServiceConnectionId: '0aec1693-7042-4edf-bc97-a1108378705b'
   python.version: '3.7.6'
 stages:
 - stage: Running_Infastructure_as_Code
@@ -45,7 +45,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
-        backendServiceArm: '0aec1693-7042-4edf-bc97-a1108378705b'
+        backendServiceArm: '$(azureServiceConnectionId)'
         backendAzureRmResourceGroupName: 'devops_azure_udacity_03'
         backendAzureRmStorageAccountName: 'tfstate1215423378'
         backendAzureRmContainerName: 'tfstate'
@@ -64,7 +64,7 @@ stages:
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '-out=tfplan -var-file=terraform.tfvars -var="ssh_public_key_path=$(downloadSSHKey.secureFilePath)"'
-        environmentServiceNameAzureRM: '0aec1693-7042-4edf-bc97-a1108378705b'
+        environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
     - task: TerraformTaskV3@3
       displayName: 'Apply Terraform'
       inputs:
@@ -72,7 +72,7 @@ stages:
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '"tfplan"'
-        environmentServiceNameAzureRM: '0aec1693-7042-4edf-bc97-a1108378705b'
+        environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
 - stage: Build
   jobs:
@@ -109,7 +109,7 @@ stages:
   - deployment: FakeRestAPI
     pool:
       vmImage: ubuntu-20.04
-    environment: 'TEST'
+    environment: 'test'
     strategy:
       runOnce:
         deploy:
@@ -117,8 +117,8 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
-              azureSubscription: 'deploy terraform'
-              appName: 'datmq-AppService'
+              azureSubscription: '$(azureServiceConnectionId)'
+              appName: 'fake-api-service'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   - deployment: VMDeploy
