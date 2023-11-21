@@ -70,7 +70,6 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        commandOptions: '"tfplan"'
         environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
 - stage: Build
