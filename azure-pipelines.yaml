@@ -116,7 +116,7 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription: '$(azureServiceConnectionId)'
-              appName: 'fake-api-service'
+              appName: 'ud-az-devops-03-app-AppService'
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
   - deployment: VMDeploy
@@ -142,7 +142,7 @@ stages:
                 pip3 install selenium
 
 
-                export PATH=$PATH:/home/datmq1/chromedriver_linux64/
+                export PATH=$PATH:/home/azureuser/chromedriver_linux64/
           - task: DownloadPipelineArtifact@2
             inputs:
               buildType: 'current'
