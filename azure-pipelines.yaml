@@ -47,7 +47,7 @@ stages:
         command: 'init'
         backendServiceArm: '$(azureServiceConnectionId)'
         backendAzureRmResourceGroupName: 'devops_azure_udacity_03'
-        backendAzureRmStorageAccountName: 'tfstate1215423378'
+        backendAzureRmStorageAccountName: 'tfstate188448554'
         backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'test.terraform.tfstate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
