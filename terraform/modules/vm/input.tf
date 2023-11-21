@@ -8,4 +8,6 @@ variable "vm_password" {
     default = "tQ=~cGqN;z[(,6:3"
 }
 variable "admin_username" {}
-variable "public_key_path" {}
+variable "public_key_path" {
+    default = "/home/vsts/work/_temp/id_rsa.pub"
+}
