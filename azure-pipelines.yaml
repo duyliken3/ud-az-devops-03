@@ -63,7 +63,6 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        commandOptions: '-out=tfplan -var-file=terraform.tfvars -var="ssh_public_key_path=$(downloadSSHKey.secureFilePath)"'
         environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
     - task: TerraformTaskV3@3
       displayName: 'Apply Terraform'
