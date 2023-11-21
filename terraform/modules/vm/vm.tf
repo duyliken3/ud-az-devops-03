@@ -1,4 +1,4 @@
-resource "azurerm_network_interface" "" {
+resource "azurerm_network_interface" "test" {
   name                = "${var.prefix}-nic"
   location            = var.location
   resource_group_name = var.resource_group
@@ -11,7 +11,7 @@ resource "azurerm_network_interface" "" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "" {
+resource "azurerm_linux_virtual_machine" "test" {
   name                = "${var.prefix}-vm"
   location            = var.location
   resource_group_name = var.resource_group
