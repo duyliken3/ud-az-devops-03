@@ -53,13 +53,13 @@ module "publicip" {
   resource_group   = "${module.resource_group.resource_group_name}"
 }
 module "vm" {
-  source = "./modules/vm"
+  source = "../../modules/vm"
+  prefix = "vm03"
   location = "${var.location}"
-  application_type = "${var.application_type}"
-  resource_type = "VM"
   resource_group = "${module.resource_group.resource_group_name}"
   subnet_id = "${module.network.subnet_id_test}"
-  public_ip_id = "${module.publicip.public_ip_address_id}"
+  public_ip_address_id = "${module.publicip.public_ip_address_id}"
   admin_username = "${var.admin_username}"
-  ssh_public_key_path = "${var.ssh_public_key_path}"
+  vm_password = "${var.admin_password}"
+  public_key_path = "${var.public_key_path}"
 }
