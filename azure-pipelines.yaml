@@ -45,11 +45,11 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'init'
-        backendServiceArm: 'deploy terraform'
-        backendAzureRmResourceGroupName: 'az-terraform'
-        backendAzureRmStorageAccountName: 'terraformstoragedatmq'
-        backendAzureRmContainerName: 'terraform'
-        backendAzureRmKey: 'terraformState'
+        backendServiceArm: '0aec1693-7042-4edf-bc97-a1108378705b'
+        backendAzureRmResourceGroupName: 'devops_azure_udacity_03'
+        backendAzureRmStorageAccountName: 'tfstate1215423378'
+        backendAzureRmContainerName: 'tfstate'
+        backendAzureRmKey: 'test.terraform.tfstate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     - task: TerraformTaskV3@3
       displayName: 'Validate Terraform'
@@ -64,7 +64,7 @@ stages:
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '-out=tfplan -var-file=terraform.tfvars -var="ssh_public_key_path=$(downloadSSHKey.secureFilePath)"'
-        environmentServiceNameAzureRM: 'deploy terraform'
+        environmentServiceNameAzureRM: '0aec1693-7042-4edf-bc97-a1108378705b'
     - task: TerraformTaskV3@3
       displayName: 'Apply Terraform'
       inputs:
@@ -72,7 +72,7 @@ stages:
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         commandOptions: '"tfplan"'
-        environmentServiceNameAzureRM: 'deploy terraform'
+        environmentServiceNameAzureRM: '0aec1693-7042-4edf-bc97-a1108378705b'
 
 - stage: Build
   jobs:
