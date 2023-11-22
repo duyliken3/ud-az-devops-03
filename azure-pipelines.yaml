@@ -124,8 +124,8 @@ stages:
     displayName: 'Deploy VM'
     environment:
       name:  test
+      resourceName: 'linux-test'
       resourceType: VirtualMachine
-      tags: devops03
     strategy:
       runOnce:
         deploy:
