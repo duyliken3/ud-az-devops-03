@@ -186,17 +186,23 @@ stages:
           script: 'sudo npm install -g newman'
           workingDirectory: $(System.DefaultWorkingDirectory)
       - task: CmdLine@2
+        displayName: WorkingDirectory
+        inputs:
+          script: 'ls -la '
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+        
+      - task: CmdLine@2
         displayName: Run Regression Tests
         continueOnError: true
         inputs:
-          script: 'newman run StarterApi.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+          script: 'newman run automatedtesting/postman/StarterApi.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
       - task: CmdLine@2
         displayName: Run Validation Tests
         continueOnError: true
         inputs:
-          script: 'newman run StarterApi.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+          script: 'newman run automatedtesting/postman/StarterApi.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'JUnit'
