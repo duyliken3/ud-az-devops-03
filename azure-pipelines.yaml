@@ -3,7 +3,7 @@ variables:
   azureServiceConnectionId: '0aec1693-7042-4edf-bc97-a1108378705b'
   python.version: '3.7.6'
 stages:
-- stage: Running_Infastructure_as_Code
+- stage: IaC
   jobs:
   - job: Build
     pool:
@@ -174,7 +174,7 @@ stages:
                 echo 'Show folder selenium'
                 ls -1 
               workingDirectory: '$(Pipeline.Workspace)/selenium'
-- stage: Integration_Test
+- stage: IntegrationTest
   jobs:
     - job: Running_Integration_Test_With_Newman_Posman
       pool:
@@ -189,13 +189,13 @@ stages:
         displayName: Run Regression Tests
         continueOnError: true
         inputs:
-          script: 'newman run AzureDevOpsRegressionTest.postman_collection.json -e StarterApi.postman_environment.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
+          script: 'newman run StarterApi.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
       - task: CmdLine@2
         displayName: Run Validation Tests
         continueOnError: true
         inputs:
-          script: 'newman run AzureDevOpsValidationTest.postman_collection.json -e StarterApi.postman_environment.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
+          script: 'newman run StarterApi.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
       - task: PublishTestResults@2
         inputs:
@@ -204,7 +204,7 @@ stages:
           searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
           testRunTitle: 'Publish test results'
 
-- stage: JMeter_Tests
+- stage: JMeter
   jobs:
     - job: Running_Performance_Tests_With_JMeter
       pool:
@@ -265,7 +265,7 @@ stages:
           script: 'cat jmeter.log'
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
 
-- stage: Selenium_Testing
+- stage: Selenium
   jobs:
   - deployment: VMSeleniumTests
     displayName: 'Running Selenium tests'
