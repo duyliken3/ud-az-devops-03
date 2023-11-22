@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "968b3a18-cc72-48a2-9b6b-e8619b4aaca8",
 		"name": "Starter APIs",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://ud-az-devops-03-app-appservice.azurewebsites.net/collection.json"
 	},
 	"item": [
 		{
