@@ -190,7 +190,7 @@ stages:
         continueOnError: true
         inputs:
           script: 'newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
       - task: CmdLine@2
         displayName: Run Validation Tests
         continueOnError: true
