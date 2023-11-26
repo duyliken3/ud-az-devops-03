@@ -117,11 +117,11 @@ stages:
             displayName: 'Deploy Azure Web App'
             inputs:
               azureSubscription: '$(azrueAppServicConectionId)'
-              appType: 'webApp'
+              appType: 'webAppLinux'
               appName: 'ud-az-devops-03-app-AppService'
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
               appSettings: "-WEBSITE_RUN_FROM_PACKAGE 0"
-              deploymentMethod: 'zipDeploy'
+              deploymentMethod: 'auto'
   - deployment: VMDeploy
     displayName: 'Deploy VM'
     environment:
