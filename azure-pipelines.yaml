@@ -116,7 +116,7 @@ stages:
             displayName: WorkingDirectory
             inputs:
               script: 'ls -la '
-              workingDirectory: '(Pipeline.Workspace)/drop-fakerestapi/'
+              workingDirectory: '$(Pipeline.Workspace)/drop-fakerestapi/'
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
