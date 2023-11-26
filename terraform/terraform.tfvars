@@ -6,7 +6,7 @@ tenant_id = "db086519-96ca-4ffb-8b21-fc8954da3df9"
 
 # Resource Group/Location
 location = "East Asia"
-resource_group = "final-tf-devops03"
+resource_group = "ud-az-devops-03-tf"
 application_type = "ud-az-devops-03-app"
 
 # VM
