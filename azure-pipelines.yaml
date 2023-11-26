@@ -121,6 +121,7 @@ stages:
               appName: 'ud-az-devops-03-app-AppService'
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
               appSettings: "-WEBSITE_RUN_FROM_PACKAGE 0"
+              deploymentMethod: 'zipDeploy'
   - deployment: VMDeploy
     displayName: 'Deploy VM'
     environment:
