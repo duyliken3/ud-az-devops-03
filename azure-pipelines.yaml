@@ -1,6 +1,7 @@
 name: Azure Pipelines
 variables:
   azureServiceConnectionId: '0aec1693-7042-4edf-bc97-a1108378705b'
+  azrueAppServicConectionId: 'd73758b5-d4cb-4e2a-afc8-87645401f35b'
   python.version: '3.7.6'
 stages:
 - stage: IaC
@@ -115,7 +116,7 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
-              azureSubscription: '$(azureServiceConnectionId)'
+              azureSubscription: '$(azrueAppServicConectionId)'
               appType: 'webApp'
               appName: 'ud-az-devops-03-app-AppService'
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
