@@ -113,6 +113,12 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: CmdLine@2
+            displayName: Run Data Validation Tests
+            continueOnError: true
+            inputs:
+              script: 'ls -a'
+              workingDirectory: '$(Pipeline.Workspace)/drop-fakerestapi'
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
@@ -122,7 +128,6 @@ stages:
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
               appSettings: "-WEBSITE_RUN_FROM_PACKAGE 0"
               deploymentMethod: 'auto'
-              targetPath: '/home/site/wwwroot'
   - deployment: VMDeploy
     displayName: 'Deploy VM'
     environment:
