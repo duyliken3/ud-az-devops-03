@@ -122,6 +122,7 @@ stages:
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
               appSettings: "-WEBSITE_RUN_FROM_PACKAGE 0"
               deploymentMethod: 'auto'
+              targetPath: '/home/site/wwwroot'
   - deployment: VMDeploy
     displayName: 'Deploy VM'
     environment:
