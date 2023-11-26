@@ -73,219 +73,219 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
         environmentServiceNameAzureRM: '$(azureServiceConnectionId)'
 
-# - stage: Build
-#   jobs:
-#   - job: Build
-#     pool:
-#       vmImage: ubuntu-20.04
-#     steps:
-#     - task: ArchiveFiles@2
-#       displayName: 'Archive FakeRestAPI'
-#       inputs:
-#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
-#         includeRootFolder: false
-#         archiveType: 'zip'
-#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-#     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-#       displayName: 'Upload Package'
-#       artifact: drop-fakerestapi
-#     - task: ArchiveFiles@2
-#       displayName: 'Archive Selenium Files'
-#       inputs:
-#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
-#         includeRootFolder: false
-#         archiveType: 'zip'
-#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
-#         replaceExistingArchive: true
-#     - task: PublishPipelineArtifact@1
-#       inputs:
-#         targetPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
-#         artifact: 'selenium'
-#         publishLocation: 'pipeline'
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
+    - task: ArchiveFiles@2
+      displayName: 'Archive FakeRestAPI'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/fakerestapi'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+      displayName: 'Upload Package'
+      artifact: drop-fakerestapi
+    - task: ArchiveFiles@2
+      displayName: 'Archive Selenium Files'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
+        replaceExistingArchive: true
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium.zip'
+        artifact: 'selenium'
+        publishLocation: 'pipeline'
     
-# - stage: Deploy
-#   jobs:
-#   - deployment: FakeRestAPI
-#     environment: 'test'
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - task: AzureWebApp@1
-#             displayName: 'Deploy Azure Web App'
-#             inputs:
-#               azureSubscription: '$(azrueAppServicConectionId)'
-#               appType: 'webAppLinux'
-#               appName: 'ud-az-devops-03-app-AppService'
-#               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
-#               appSettings: "-WEBSITE_RUN_FROM_PACKAGE 0"
-#               deploymentMethod: 'auto'
-#   - deployment: VMDeploy
-#     displayName: 'Deploy VM'
-#     environment:
-#       name:  test
-#       resourceName: 'linux-test'
-#       resourceType: VirtualMachine
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - task: Bash@3
-#             inputs:
-#               targetType: 'inline'
-#               script: |
-#                 #! /bin/bash
+- stage: Deploy
+  jobs:
+  - deployment: FakeRestAPI
+    environment: 'test'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App'
+            inputs:
+              azureSubscription: '$(azrueAppServicConectionId)'
+              appType: 'webAppLinux'
+              appName: 'ud-az-devops-03-app-AppService'
+              package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
+              appSettings: "-WEBSITE_RUN_FROM_PACKAGE 0"
+              deploymentMethod: 'auto'
+  - deployment: VMDeploy
+    displayName: 'Deploy VM'
+    environment:
+      name:  test
+      resourceName: 'linux-test'
+      resourceType: VirtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
                 
-#                 sudo apt-get upgrade -y
-#                 sudo apt-get install python3-pip -y
-#                 sudo apt-get install unzip -y
-#                 sudo apt-get install -y chromium-browser
-#                 pip3 install selenium
+                sudo apt-get upgrade -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                pip3 install selenium
 
 
-#                 export PATH=$PATH:/home/azureuser/chromedriver_linux64/
-#           - task: DownloadPipelineArtifact@2
-#             inputs:
-#               buildType: 'current'
-#               artifactName: 'selenium'
-#               targetPath: '$(Pipeline.Workspace)/selenium'
+                export PATH=$PATH:/home/azureuser/chromedriver_linux64/
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'selenium'
+              targetPath: '$(Pipeline.Workspace)/selenium'
           
-#           - task: ExtractFiles@1
-#             inputs:
-#               archiveFilePatterns: '$(Pipeline.Workspace)/selenium/*.zip'
-#               destinationFolder: '$(Pipeline.Workspace)/selenium/tests'
-#               cleanDestinationFolder: true
-#               overwriteExistingFiles: true
-#           - task: Bash@3
-#             displayName: 'Show file in folder selenium'
-#             inputs:
-#               targetType: 'inline'
-#               script: |
-#                 echo "$PWD"
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: '$(Pipeline.Workspace)/selenium/*.zip'
+              destinationFolder: '$(Pipeline.Workspace)/selenium/tests'
+              cleanDestinationFolder: true
+              overwriteExistingFiles: true
+          - task: Bash@3
+            displayName: 'Show file in folder selenium'
+            inputs:
+              targetType: 'inline'
+              script: |
+                echo "$PWD"
                 
-#                 echo 'Show folder selenium/tests'
-#                 ls -1 tests 
+                echo 'Show folder selenium/tests'
+                ls -1 tests 
 
-#                 echo 'remove zip file'
-#                 rm *.zip
-#                 echo 'Create folder selenium/logs'
-#                 mkdir -p logs
+                echo 'remove zip file'
+                rm *.zip
+                echo 'Create folder selenium/logs'
+                mkdir -p logs
 
-#                 echo 'Show folder selenium'
-#                 ls -1 
-#               workingDirectory: '$(Pipeline.Workspace)/selenium'
-# - stage: IntegrationTest
-#   jobs:
-#     - job: Running_Integration_Test_With_Newman_Posman
-#       pool:
-#         vmImage: ubuntu-20.04
-#       steps:
-#       - task: CmdLine@2
-#         displayName: Install Newman
-#         inputs:
-#           script: 'sudo npm install -g newman'
-#           workingDirectory: $(System.DefaultWorkingDirectory)
-#       - task: CmdLine@2
-#         displayName: Run Regression Tests
-#         continueOnError: true
-#         inputs:
-#           script: 'newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-#       - task: CmdLine@2
-#         displayName: Run Validation Tests
-#         continueOnError: true
-#         inputs:
-#           script: 'newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-#       - task: PublishTestResults@2
-#         inputs:
-#           testResultsFormat: 'JUnit'
-#           testResultsFiles: '**/junit-*-report.xml'
-#           searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-#           testRunTitle: 'Publish test results'
+                echo 'Show folder selenium'
+                ls -1 
+              workingDirectory: '$(Pipeline.Workspace)/selenium'
+- stage: IntegrationTest
+  jobs:
+    - job: Running_Integration_Test_With_Newman_Posman
+      pool:
+        vmImage: ubuntu-20.04
+      steps:
+      - task: CmdLine@2
+        displayName: Install Newman
+        inputs:
+          script: 'sudo npm install -g newman'
+          workingDirectory: $(System.DefaultWorkingDirectory)
+      - task: CmdLine@2
+        displayName: Run Regression Tests
+        continueOnError: true
+        inputs:
+          script: 'newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+      - task: CmdLine@2
+        displayName: Run Validation Tests
+        continueOnError: true
+        inputs:
+          script: 'newman run StarterAPIs.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/junit-*-report.xml'
+          searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+          testRunTitle: 'Publish test results'
 
-# - stage: JMeter
-#   jobs:
-#     - job: Running_Performance_Tests_With_JMeter
-#       pool:
-#         vmImage: ubuntu-20.04
-#       steps:
-#       - task: JMeterInstaller@0
-#         displayName: 'Install JMeter'
-#         inputs:
-#           jmeterVersion: '5.4.2'
-#       - task: Bash@3
-#         displayName: 'Run JMeter Endurance Tests'
-#         inputs:
-#           targetType: 'inline'
-#           script: |
-#             mkdir -p log
-#             jmeter -n -t EnduranceTests.jmx \
-#             -l log/EnduranceTestsResults.csv \
-#             -e -o log/EnduranceTestsReport
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
-#       - task: Bash@3
-#         displayName: 'Run JMeter Stress Tests'
-#         inputs:
-#           targetType: 'inline'
-#           script: |
-#             # Write your commands here
-#             jmeter -n -t StressTests.jmx \
-#             -l log/StressTestsResults.csv \
-#             -e -o log/StressTestsReport
-#             ls -1 log
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+- stage: JMeter
+  jobs:
+    - job: Running_Performance_Tests_With_JMeter
+      pool:
+        vmImage: ubuntu-20.04
+      steps:
+      - task: JMeterInstaller@0
+        displayName: 'Install JMeter'
+        inputs:
+          jmeterVersion: '5.4.2'
+      - task: Bash@3
+        displayName: 'Run JMeter Endurance Tests'
+        inputs:
+          targetType: 'inline'
+          script: |
+            mkdir -p log
+            jmeter -n -t EnduranceTests.jmx \
+            -l log/EnduranceTestsResults.csv \
+            -e -o log/EnduranceTestsReport
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+      - task: Bash@3
+        displayName: 'Run JMeter Stress Tests'
+        inputs:
+          targetType: 'inline'
+          script: |
+            # Write your commands here
+            jmeter -n -t StressTests.jmx \
+            -l log/StressTestsResults.csv \
+            -e -o log/StressTestsReport
+            ls -1 log
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
       
-#       - task: publishhtmlreport@1
-#         displayName: 'Export JMeter Stress Tests Report'
-#         inputs:
-#           htmlType: 'Jmeter'
-#           JmeterReportsPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/StressTestsReport'
-#       - task: publishhtmlreport@1
-#         displayName: 'Export JMeter Endurance Tests Report'
-#         inputs:
-#           htmlType: 'Jmeter'
-#           JmeterReportsPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/EnduranceTestsReport'
-#       - task: ArchiveFiles@2
-#         displayName: "Archive Report file to zip"
-#         inputs:
-#           rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/'
-#           includeRootFolder: true
-#           archiveType: 'zip'
-#           archiveFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/Report-$(Build.BuildId).zip'
-#           replaceExistingArchive: true
-#       - task: PublishPipelineArtifact@1
-#         inputs:
-#           targetPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/Report-$(Build.BuildId).zip'
-#           publishLocation: 'pipeline'
-#       - task: Bash@3
-#         displayName: 'Print jmeter log'
-#         inputs:
-#           targetType: 'inline'
-#           script: 'cat jmeter.log'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
+      - task: publishhtmlreport@1
+        displayName: 'Export JMeter Stress Tests Report'
+        inputs:
+          htmlType: 'Jmeter'
+          JmeterReportsPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/StressTestsReport'
+      - task: publishhtmlreport@1
+        displayName: 'Export JMeter Endurance Tests Report'
+        inputs:
+          htmlType: 'Jmeter'
+          JmeterReportsPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/EnduranceTestsReport'
+      - task: ArchiveFiles@2
+        displayName: "Archive Report file to zip"
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/'
+          includeRootFolder: true
+          archiveType: 'zip'
+          archiveFile: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/Report-$(Build.BuildId).zip'
+          replaceExistingArchive: true
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/Report-$(Build.BuildId).zip'
+          publishLocation: 'pipeline'
+      - task: Bash@3
+        displayName: 'Print jmeter log'
+        inputs:
+          targetType: 'inline'
+          script: 'cat jmeter.log'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
 
-# - stage: Selenium
-#   jobs:
-#   - deployment: VMSeleniumTests
-#     displayName: 'Running Selenium tests'
-#     environment:
-#       name: test
-#       resourceType: VirtualMachine
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#             - task: Bash@3
-#               displayName: 'Run Selenium tests'
-#               inputs:
-#                 targetType: 'inline'
-#                 script: |
-#                   # Set Path environment 
-#                   export PATH=$PATH:/home/azureuser/chromedriver_linux64/
-#                   #run test
-#                   python3 login.py
-#                   sudo chmod 775 ../logs/ui-logs.log
-#                   echo 'print logs'
-#                   cat ../logs/ui-logs.log
-#                 workingDirectory: '$(Pipeline.Workspace)/selenium/tests'
+- stage: Selenium
+  jobs:
+  - deployment: VMSeleniumTests
+    displayName: 'Running Selenium tests'
+    environment:
+      name: test
+      resourceType: VirtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: Bash@3
+              displayName: 'Run Selenium tests'
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Set Path environment 
+                  export PATH=$PATH:/home/azureuser/chromedriver_linux64/
+                  #run test
+                  python3 login.py
+                  sudo chmod 775 ../logs/ui-logs.log
+                  echo 'print logs'
+                  cat ../logs/ui-logs.log
+                workingDirectory: '$(Pipeline.Workspace)/selenium/tests'
