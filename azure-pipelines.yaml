@@ -46,7 +46,7 @@ stages:
         provider: 'azurerm'
         command: 'init'
         backendServiceArm: '$(azureServiceConnectionId)'
-        backendAzureRmResourceGroupName: 'final-tf-devops03'
+        backendAzureRmResourceGroupName: 'final-tf-devops03-01'
         backendAzureRmStorageAccountName: 'tstate31245'
         backendAzureRmContainerName: 'tfstate'
         backendAzureRmKey: 'test.terraform.tfstate'
