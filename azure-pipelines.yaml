@@ -106,19 +106,11 @@ stages:
 - stage: Deploy
   jobs:
   - deployment: FakeRestAPI
-    pool:
-      vmImage: ubuntu-20.04
     environment: 'test'
     strategy:
       runOnce:
         deploy:
           steps:
-          - task: CmdLine@2
-            displayName: Run Data Validation Tests
-            continueOnError: true
-            inputs:
-              script: 'ls -a'
-              workingDirectory: '$(Pipeline.Workspace)/drop-fakerestapi'
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
