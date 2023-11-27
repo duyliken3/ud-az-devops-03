@@ -140,6 +140,7 @@ stages:
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
+                pip3 install --upgrade requests
                 pip3 install selenium
 
 
@@ -170,6 +171,7 @@ stages:
                 rm *.zip
                 echo 'Create folder selenium/logs'
                 mkdir -p logs
+                pwd
 
                 echo 'Show folder selenium'
                 ls -1 
