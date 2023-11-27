@@ -1,0 +1,832 @@
+{
+	"info": {
+		"_postman_id": "0245a481-efbf-4670-b7ca-cbd7e6c312a9",
+		"name": "Validattion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7749859"
+	},
+	"item": [
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "Create Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":31,\"Title\":\"Activity 31\",\"DueDate\":\"2023-11-27T00:00:00Z\",\"Completed\":true}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 31,\n    \"Title\": \"Activity 31\",\n    \"DueDate\": \"2023-11-27T00:00:00.00Z\",\n    \"Completed\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/Activities",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":31,\"Title\":\"Activity 31\",\"DueDate\":\"2023-11-27T00:00:00Z\",\"Completed\":true}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 31,\n    \"Title\": \"Activity 31\",\n    \"DueDate\": \"2023-11-27T00:00:00.00Z\",\n    \"Completed\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/Activities/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var expectedRecords = 30;",
+									"pm.test(`Found record with id from 1 - ${expectedRecords}`, function () {",
+									"    for (i = 0; i < expectedRecords; i++){",
+									"        pm.expect(jsonData[i].ID).to.eql(i+1);",
+									"    }",
+									"});",
+									"pm.test(`Total records found ${expectedRecords}`, function () {",
+									"    pm.expect(jsonData.length).to.eql(expectedRecords);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}api/Activities",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Test data validate\", function () {",
+									"    var jsonData = pm.response.json;",
+									"    pm.expect(jsonData.ID,1);",
+									"    pm.expect(jsonData.Title,'Activity 1');",
+									"    pm.expect(jsonData.Completed,false);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}api/Activities/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/Activities/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "Create Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":1,\"IDBook\":0,\"FirstName\":null,\"LastName\":null}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 1,\n    \"Title\": \"Create Authors\",\n    \"Description\": \"Create Authors Description\",\n    \"PageCount\": 0,\n    \"Excerpt\": \"Excerpt\",\n    \"PublishDate\": \"2023-11-27T00:00:00.00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/Authors",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":1,\"IDBook\":0,\"FirstName\":null,\"LastName\":null}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 1,\n    \"Title\": \"Update Author\",\n    \"Description\": \"Update Author Description\",\n    \"PageCount\": 0,\n    \"Excerpt\": \"Excerpt\",\n    \"PublishDate\": \"023-11-27T00:00:00.00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/Authors/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Authors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var expectedRecords = 400;",
+									"pm.test(`Found record with id from 1 - ${expectedRecords}`, function () {",
+									"    for (i = 0; i < expectedRecords; i++){",
+									"        pm.expect(jsonData[i].ID).to.eql(i+1);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/Authors",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var dataExpect =`{\"ID\":1,\"IDBook\":1,\"FirstName\":\"First Name 1\",\"LastName\":\"Last Name 1\"}`",
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(dataExpect);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/Authors/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Authors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Author By Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"IDBook is correct\", function () {",
+									"    for(item of jsonData){",
+									"        pm.expect(item.IDBook).to.eql(1);item.IDBook",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}Authors/Books/1",
+							"host": [
+								"{{URL}}Authors"
+							],
+							"path": [
+								"Books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/Authors/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Authors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CoverPhotos",
+			"item": [
+				{
+					"name": "Create CoverPhoto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":1,\"IDBook\":0,\"Url\":null}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 1,\n    \"Title\": \"Title\",\n    \"Description\": \"Description\",\n    \"PageCount\": 0,\n    \"Excerpt\": \"Excerpt\",\n    \"PublishDate\": \"2023-11-27T00:00:00.00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/CoverPhotos",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"CoverPhotos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CoverPhoto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":1,\"IDBook\":0,\"Url\":null}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 1,\n    \"Title\": \"string\",\n    \"Description\": \"string\",\n    \"PageCount\": 0,\n    \"Excerpt\": \"string\",\n    \"PublishDate\": \"2023-11-27T00:00:00.00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/CoverPhotos/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"CoverPhotos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All CoverPhotos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var expectedRecords = 200;",
+									"pm.test(`Found record with id from 1 - ${expectedRecords}`, function () {",
+									"    for (i = 0; i < expectedRecords; i++){",
+									"        pm.expect(jsonData[i].ID).to.eql(i+1);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/CoverPhotos",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"CoverPhotos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CoverPhoto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var dataExpect =`{\"ID\":1,\"IDBook\":1,\"Url\":\"https://placeholdit.imgix.net/~text?txtsize=33&txt=Book 1&w=250&h=350\"}`",
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(dataExpect);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/CoverPhotos/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"CoverPhotos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cover By Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"IDBook is correct\", function () {",
+									"    for(item of jsonData){",
+									"        pm.expect(item.IDBook).to.eql(1);item.IDBook",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}Books/Covers/1",
+							"host": [
+								"{{URL}}Books"
+							],
+							"path": [
+								"Covers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete CoverPhoto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/CoverPhotos/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"CoverPhotos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":1,\"UserName\":\"UserName\",\"Password\":\"Password\"}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 1,\n    \"UserName\": \"UserName\",\n    \"Password\": \"Password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/Users",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(`{\"ID\":1,\"UserName\":\"UserName\",\"Password\":\"Password\"}`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ID\": 1,\n    \"UserName\": \"UserName\",\n    \"Password\": \"Password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}api/Users/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var expectedRecords = 10;",
+									"pm.test(`Total records found ${expectedRecords}`, function () {",
+									"    pm.expect(jsonData.length).to.eql(expectedRecords);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/Users",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var dataExpect =`{\"ID\":1,\"UserName\":\"User 1\",\"Password\":\"Password1\"}`",
+									"pm.test(\"Test data validate\", function () {",
+									"    pm.response.to.have.body(dataExpect);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/Users/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}api/Users/1",
+							"host": [
+								"{{URL}}api"
+							],
+							"path": [
+								"Users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
