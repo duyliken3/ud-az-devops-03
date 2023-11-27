@@ -4,7 +4,7 @@ variables:
   azrueAppServicConectionId: 'd73758b5-d4cb-4e2a-afc8-87645401f35b'
   python.version: '3.7.6'
 stages:
-- stage: IaC
+- stage: IaC (Terraform)
   jobs:
   - job: Build
     pool:
@@ -120,7 +120,7 @@ stages:
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
               appSettings: "-WEBSITE_RUN_FROM_PACKAGE 0"
               deploymentMethod: 'auto'
-  - deployment: VMDeploy
+  - deployment: Virtual Machine
     displayName: 'Deploy VM'
     environment:
       name:  test
@@ -174,9 +174,9 @@ stages:
                 echo 'Show folder selenium'
                 ls -1 
               workingDirectory: '$(Pipeline.Workspace)/selenium'
-- stage: IntegrationTest
+- stage: Integration Test
   jobs:
-    - job: Running_Integration_Test_With_Newman_Posman
+    - job: Newman
       pool:
         vmImage: ubuntu-20.04
       steps:
@@ -206,7 +206,7 @@ stages:
 
 - stage: JMeter
   jobs:
-    - job: Running_Performance_Tests_With_JMeter
+    - job: Performance Testing
       pool:
         vmImage: ubuntu-20.04
       steps:
@@ -215,7 +215,7 @@ stages:
         inputs:
           jmeterVersion: '5.4.2'
       - task: Bash@3
-        displayName: 'Run JMeter Endurance Tests'
+        displayName: 'Endurance Tests'
         inputs:
           targetType: 'inline'
           script: |
@@ -225,7 +225,7 @@ stages:
             -e -o log/EnduranceTestsReport
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
       - task: Bash@3
-        displayName: 'Run JMeter Stress Tests'
+        displayName: 'Stress Tests'
         inputs:
           targetType: 'inline'
           script: |
@@ -237,12 +237,12 @@ stages:
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter'
       
       - task: publishhtmlreport@1
-        displayName: 'Export JMeter Stress Tests Report'
+        displayName: 'Export Stress Tests Report'
         inputs:
           htmlType: 'Jmeter'
           JmeterReportsPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/StressTestsReport'
       - task: publishhtmlreport@1
-        displayName: 'Export JMeter Endurance Tests Report'
+        displayName: 'Export Endurance Tests Report'
         inputs:
           htmlType: 'Jmeter'
           JmeterReportsPath: '$(System.DefaultWorkingDirectory)/automatedtesting/jmeter/log/EnduranceTestsReport'
@@ -268,7 +268,7 @@ stages:
 - stage: Selenium
   jobs:
   - deployment: VMSeleniumTests
-    displayName: 'Running Selenium tests'
+    displayName: 'Selenium tests'
     environment:
       name: test
       resourceType: VirtualMachine
