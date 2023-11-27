@@ -114,6 +114,7 @@ Execute Pipeline in your Azure DevOPs Project
 
 ![](/captures/log_workspace.png)
 ![](/captures/selenium_log_table.png)
+![](/captures/selenium_Log.png)
 
 9. Set up email alerts
 
