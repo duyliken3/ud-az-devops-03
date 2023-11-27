@@ -140,14 +140,8 @@ stages:
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
-                sudo apt-get install libxkbcommon0
-                sudo apt-get install libxdamage1
-                sudo apt-get install libgbm1
-                sudo apt-get install libpango-1.0
-                sudo apt-get install libcairo2
-                
-                pip3 install -U selenium==4.11.2
 
+                pip3 install -U selenium==4.11.2
 
                 export PATH=$PATH:/home/azureuser/chromedriver_linux64/
           - task: DownloadPipelineArtifact@2
@@ -162,25 +156,6 @@ stages:
               destinationFolder: '$(Pipeline.Workspace)/selenium/tests'
               cleanDestinationFolder: true
               overwriteExistingFiles: true
-          - task: Bash@3
-            displayName: 'Show file in folder selenium'
-            inputs:
-              targetType: 'inline'
-              script: |
-                echo "$PWD"
-                
-                echo 'Show folder selenium/tests'
-                ls -1 tests 
-
-                echo 'remove zip file'
-                rm *.zip
-                echo 'Create folder selenium/logs'
-                mkdir -p logs
-                pwd
-
-                echo 'Show folder selenium'
-                ls -1 
-              workingDirectory: '$(Pipeline.Workspace)/selenium'
 - stage: IntegrationTest
   jobs:
     - job: Newman
