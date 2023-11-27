@@ -5,9 +5,6 @@
 In this repository, you will use a Terraform template to deploy a web server in Azure.  
 For test, you will be implement Selenium and JMeter. Finally, using azure monitor to catch up logs.  
 
-## Badges
-[![Build Status](https://dev.azure.com/duyliken2/Ensuring%20Quality%20Releases/_apis/build/status%2Fduyliken3.ud-az-devops-03?branchName=main)](https://dev.azure.com/duyliken2/Ensuring%20Quality%20Releases/_build/latest?definitionId=6&branchName=main)
-
 ## Dependencies
 
 | Dependency | Link |
