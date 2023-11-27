@@ -85,14 +85,34 @@ Install these Extensions:
 
 Create a Project 
 
+![](/captures/azure_devops_project.png)
+
 Create the Service Connection
+
+![](/captures/devops_connection_service.png)
 
 Add into Pipelines --> Library --> Secure files these 2 files:  **id_rsa key** **terraform.tfvars**
 
-Create Enviroment **linux-test**
+![](/captures/devops_libs.png)
+
+Create Enviroment
+
+![](/captures/devops_env.png)
 
 Create a New Pipeline in your Azure DevOPs Project
 
-Create a Log Analytics workspace
+8. Create a Log Analytics workspace and monitoring
 
-Set up email alerts
+![](/captures/log_workspace.png)
+![](/captures/selenium_log_table.png)
+
+9. Set up email alerts
+
+* Create Alert and action group
+
+![](/captures/alert_rule.png)
+![](/captures/action_group.png)
+
+* Email Notification
+
+![](/captures/email_notify.png)
