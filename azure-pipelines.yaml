@@ -4,7 +4,7 @@ variables:
   azrueAppServicConectionId: 'd73758b5-d4cb-4e2a-afc8-87645401f35b'
   python.version: '3.7.6'
 stages:
-- stage: IaC (Terraform)
+- stage: IaC
   jobs:
   - job: Build
     pool:
@@ -174,7 +174,7 @@ stages:
                 echo 'Show folder selenium'
                 ls -1 
               workingDirectory: '$(Pipeline.Workspace)/selenium'
-- stage: Integration Test
+- stage: IntegrationTest
   jobs:
     - job: Newman
       pool:
@@ -206,7 +206,7 @@ stages:
 
 - stage: JMeter
   jobs:
-    - job: Performance Testing
+    - job: Performance
       pool:
         vmImage: ubuntu-20.04
       steps:
