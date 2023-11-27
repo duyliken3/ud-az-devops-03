@@ -140,8 +140,13 @@ stages:
                 sudo apt-get install python3-pip -y
                 sudo apt-get install unzip -y
                 sudo apt-get install -y chromium-browser
-                pip3 install --upgrade requests
-                pip3 install selenium
+                sudo apt-get install libxkbcommon0
+                sudo apt-get install libxdamage1
+                sudo apt-get install libgbm1
+                sudo apt-get install libpango-1.0
+                sudo apt-get install libcairo2
+                
+                pip3 install -U selenium==4.11.2
 
 
                 export PATH=$PATH:/home/azureuser/chromedriver_linux64/
