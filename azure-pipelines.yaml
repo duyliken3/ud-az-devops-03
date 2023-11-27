@@ -189,13 +189,13 @@ stages:
         displayName: Run Regression Tests
         continueOnError: true
         inputs:
-          script: 'newman run Activites.postman_collection.json -e StarterApi.postman_environment.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
+          script: 'newman run Activites.postman_collection.json -e fakeApis.postman_environment.json --reporters cli,junit --reporter-junit-export junit-regression-report.xml'
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
       - task: CmdLine@2
         displayName: Run Validation Tests
         continueOnError: true
         inputs:
-          script: 'newman run Validattion.postman_collection.json -e StarterApi.postman_environment.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
+          script: 'newman run Validattion.postman_collection.json -e fakeApis.postman_environment.json --reporters cli,junit --reporter-junit-export junit-validation-report.xml'
           workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
       - task: PublishTestResults@2
         inputs:
